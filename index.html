@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050505"><title>Game Booster Pro</title>
+<style>
+:root{color-scheme:dark;--bg:#050505;--card:#121212;--tx:#fff4ea;--mu:#a8927f;--ne:#ff8a1f;--pu:#ff4d00;--ok:#5be39b;--wa:#ffd23f;--er:#ff3b4e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:radial-gradient(circle at 50% -10%,#3a1600,#050505 60%);color:var(--tx);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh;padding-bottom:84px}
+main{max-width:560px;margin:auto;padding:16px}
+h1{font-size:20px;margin:4px 0 14px;letter-spacing:1px;background:linear-gradient(90deg,var(--ne),var(--pu));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:15px;margin:0 0 10px;color:var(--ne);letter-spacing:.5px}
+.card{background:var(--card);border:1px solid #3a2412;border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 0 18px #ff6a001f;animation:in .4s both}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.m{background:#0a0a0a;border-radius:12px;padding:10px}.m b{display:block;font-size:18px;margin-top:2px}.m small{color:var(--mu)}
+.bar{height:8px;background:#0a0a0a;border-radius:8px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ne),var(--pu));transition:width .6s}
+#pt{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}main{position:relative;z-index:1}h1,h2{text-shadow:0 0 14px #ff6a0066}.bar i{box-shadow:0 0 10px var(--ne)}button:active{transform:scale(.97);box-shadow:0 0 22px var(--ne)}.big{width:170px;height:170px;border-radius:50%;margin:10px auto;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800;font-size:18px;letter-spacing:1px;color:#fff;border:2px solid var(--ne);background:radial-gradient(circle,#4a1d00,#0a0a0a);box-shadow:0 0 25px var(--ne),inset 0 0 25px #ff6a0066;cursor:pointer;animation:pulse 2.4s infinite}
+.big.run{animation:spin 1s linear infinite;border-color:var(--pu)}
+@keyframes pulse{50%{box-shadow:0 0 45px var(--pu),inset 0 0 30px #ffb34755}}@keyframes spin{to{transform:rotate(360deg)}}
+button,.btn{font:inherit;color:#fff;background:linear-gradient(90deg,#ffa02e,#ff4d00);border:0;border-radius:12px;padding:10px 14px;cursor:pointer;box-shadow:0 0 12px #ff8a1f88;text-decoration:none;display:inline-block}
+button.alt{background:#0a0a0a;border:1px solid #3a2412;box-shadow:none}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:8px 0}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:10px 4px;font-size:12px}.seg button.on{outline:2px solid var(--ne)}
+input[type=text]{width:100%;background:#0a0a0a;border:1px solid #3a2412;border-radius:10px;color:var(--tx);padding:10px;margin:4px 0;font:inherit}
+.tip{font-size:13px;color:var(--mu);margin:6px 0;line-height:1.4}.tip.w{color:var(--wa)}.tip.e{color:var(--er)}.tip.o{color:var(--ok)}
+nav{position:fixed;left:0;right:0;bottom:0;background:#0a0a0aee;backdrop-filter:blur(10px);display:flex;border-top:1px solid #3a2412;padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav button{flex:1;background:none;box-shadow:none;border-radius:0;color:var(--mu);font-size:11px;padding:10px 2px}nav button.on{color:var(--ne)}nav span{display:block;font-size:20px}
+section{display:none}section.on{display:block}canvas{width:100%;height:90px;display:block}
+.sw{appearance:none;width:44px;height:24px;background:#3a2412;border-radius:12px;position:relative;cursor:pointer;transition:.2s}.sw:checked{background:var(--pu)}.sw:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}.sw:checked:after{left:23px}
+.g{display:flex;align-items:center;gap:10px;background:#0a0a0a;border-radius:12px;padding:10px;margin:6px 0}.g .ic{font-size:24px;color:var(--ne);text-shadow:0 0 10px var(--ne)}.g div{flex:1}.g small{color:var(--mu)}
+.al{max-height:62vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.ac{position:relative;background:#0a0a0a;border:1px solid #3a2412;border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;transition:.2s}.ac:active{border-color:var(--ne);box-shadow:0 0 14px #ff6a0066}
+.ac img{width:52px;height:52px;border-radius:12px;background:#1a1a1a;display:block;margin:0 auto 6px}.ac b{font-size:12px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gt{position:absolute;top:6px;right:6px;font-size:9px;padding:2px 6px;border-radius:8px;background:linear-gradient(90deg,#ffa02e,#ff4d00);color:#000;font-weight:800}
+.dic{width:96px;height:96px;border-radius:22px;background:#1a1a1a;box-shadow:0 0 24px #ff6a0088}
+.bb{width:100%;padding:18px;font-size:20px;font-weight:800;letter-spacing:2px;animation:pulse 2.4s infinite}.ev{margin-top:12px}
+</style></head><body><canvas id="pt"></canvas><main>
+<h1>⚡︎ GAME BOOSTER PRO</h1>
+
+<section id="s0" class="on">
+ <div class="card"><div class="big" id="go" onclick="optimize()">OTIMIZAR<br>AGORA</div>
+  <div class="tip" id="st" style="text-align:center">Faz um diagnóstico real do aparelho e do navegador.</div>
+  <div class="bar"><i id="pg"></i></div></div>
+ <div class="card"><h2>MONITOR EM TEMPO REAL</h2>
+  <div class="grid">
+   <div class="m"><small>FPS</small><b id="fps">–</b></div>
+   <div class="m"><small>Taxa de tela</small><b id="hz">–</b></div>
+   <div class="m"><small>Memória JS usada</small><b id="heap">–</b></div>
+   <div class="m"><small>RAM do aparelho</small><b id="ram">–</b></div>
+   <div class="m"><small>Bateria</small><b id="bat">–</b></div>
+   <div class="m"><small>Núcleos CPU</small><b id="cpu">–</b></div>
+   <div class="m"><small>Rede</small><b id="net">–</b></div>
+   <div class="m"><small>Temperatura</small><b>indisponível</b></div>
+  </div><canvas id="cv" width="520" height="90"></canvas>
+  <div class="tip">Temperatura, uso de CPU e FPS de outros jogos não são acessíveis por páginas web; só um app Android nativo com permissões especiais consegue isso.</div></div>
+ <div class="card"><h2>DESEMPENHO ESTIMADO</h2><div class="row"><b id="sc">–</b><span id="sl" class="tip"></span></div><div class="bar"><i id="scb"></i></div>
+  <div id="rec"></div></div>
+</section>
+
+<section id="s1">
+ <div class="card"><h2>ANTI-LAG</h2>
+  <div class="grid"><div class="m"><small>Latência</small><b id="ping">–</b></div><div class="m"><small>Oscilação</small><b id="jit">–</b></div>
+  <div class="m"><small>Tipo de rede</small><b id="ety">–</b></div><div class="m"><small>Velocidade estimada</small><b id="dl">–</b></div></div>
+  <div class="row"><button onclick="lagTest()">Testar conexão</button></div><div id="lagrep"></div>
+  <div class="tip">O ping é medido até um servidor público (no app Android) ou até o servidor da página (na versão web), não até o servidor do seu jogo.</div></div>
+</section>
+
+<section id="s2">
+ <div class="card"><h2>GRAPHICS BOOSTER</h2>
+  <div class="grid"><div class="m"><small>Resolução</small><b id="res">–</b></div><div class="m"><small>Densidade</small><b id="dpr">–</b></div>
+  <div class="m"><small>Atualização</small><b id="hz2">–</b></div><div class="m"><small>GPU</small><b id="gpu" style="font-size:12px">–</b></div></div>
+  <div id="gr"></div>
+  <div class="tip w">Este app não altera gráficos de outros jogos: o Android não permite isso a apps comuns. Ele só recomenda o que ajustar dentro de cada jogo.</div></div>
+</section>
+
+<section id="s3">
+ <div id="lib"><div class="card"><h2>BIBLIOTECA</h2>
+  <div id="lbc"><input type="text" id="q" placeholder="Pesquisar aplicativos…" oninput="renderLib()">
+  <div class="seg" id="flt"><button class="alt on" data-f="all" onclick="setF('all')">Todos</button><button class="alt" data-f="game" onclick="setF('game')">Jogos</button><button class="alt" data-f="app" onclick="setF('app')">Aplicativos</button></div>
+  <div class="row"><span class="tip" id="cnt"></span><span><button class="alt" id="srt" onclick="toggleSort()">A→Z</button> <button class="alt" onclick="loadApps()">↻ Atualizar</button></span></div></div>
+  <div id="nb" class="tip w" style="display:none">Esta versão web não consegue ver os apps do celular (o navegador bloqueia isso). Instale o Game Booster Pro como app Android (projeto Kotlin incluso) para usar a biblioteca automática.</div>
+  <div id="al" class="al"></div></div></div>
+ <div id="det" style="display:none"><div class="card">
+  <button class="alt" onclick="closeDet()">← Voltar</button>
+  <div style="text-align:center;margin:12px 0"><img id="d_ic" class="dic" alt=""><h2 id="d_n" style="font-size:20px;margin:10px 0 2px"></h2><div class="tip" id="d_p" style="word-break:break-all"></div></div>
+  <div class="grid" id="d_i"></div>
+  <h2 style="margin-top:14px">PERFIL DESTE APP</h2>
+  <div class="seg" id="d_pf"><button class="alt" data-m="eco" onclick="setPf('eco')">Economia</button><button class="alt" data-m="bal" onclick="setPf('bal')">Equilibrado</button><button class="alt" data-m="ult" onclick="setPf('ult')">Alto Desempenho</button></div>
+  <div class="tip" id="d_pt"></div>
+  <div class="ev"><button class="bb" id="d_b" onclick="runBoost()">BOOSTIFICAR</button></div>
+  <div id="d_run" style="display:none"><div class="tip" id="d_st" style="text-align:center"></div><div class="bar"><i id="d_pg"></i></div></div>
+  <div id="d_res" style="display:none"><h2 style="text-align:center;font-size:22px;margin:14px 0 6px">BOOST CONCLUÍDO!</h2><div id="d_rl"></div><button class="bb" id="d_go" onclick="launchApp()">INICIAR JOGO</button></div>
+ </div></div>
+</section>
+
+<section id="s4">
+ <div class="card"><h2>MODO DE DESEMPENHO</h2>
+  <div class="seg"><button class="alt" data-m="eco" onclick="setMode('eco')">ECO</button><button class="alt" data-m="bal" onclick="setMode('bal')">BALANCED</button><button class="alt" data-m="ult" onclick="setMode('ult')">ULTRA</button></div>
+  <div id="mt" class="tip"></div></div>
+ <div class="card"><h2>CONFIGURAÇÕES</h2>
+  <div class="row"><span>Otimização automática ao abrir</span><input type="checkbox" class="sw" id="c_auto" onchange="cfg()"></div>
+  <div class="row"><span>Monitoramento em tempo real</span><input type="checkbox" class="sw" id="c_mon" onchange="cfg()"></div>
+  <div class="row"><span>Notificações</span><input type="checkbox" class="sw" id="c_not" onchange="cfg()"></div>
+  <div class="row"><span>Manter tela ligada (Ultra)</span><input type="checkbox" class="sw" id="c_wl" onchange="cfg()"></div>
+  <div class="row"><button class="alt" onclick="resetAll()">Restaurar padrão</button></div>
+  <div class="tip">Dica: no Chrome do Android, abra o menu ⋮ → “Adicionar à tela inicial” para usar como app.</div></div>
+</section>
+</main>
+<nav id="nv"><button class="on" onclick="tab(0)"><span>⌂</span>Início</button><button onclick="tab(1)"><span>◉</span>Anti-Lag</button><button onclick="tab(2)"><span>◈</span>Gráficos</button><button onclick="tab(3)"><span>▶</span>Jogos</button><button onclick="tab(4)"><span>⚙︎</span>Modos</button></nav>
+<script>
+const $=id=>document.getElementById(id);
+let boost=1;const PT=[];
+(function(){const c=$('pt'),x=c.getContext('2d');let W,H;const rs=()=>{W=c.width=innerWidth;H=c.height=innerHeight};rs();addEventListener('resize',rs);
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ for(let i=0;i<45;i++)PT.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+.5,v:Math.random()*.6+.2,d:Math.random()*6});
+ (function f(){x.clearRect(0,0,W,H);for(const p of PT){p.y-=p.v*boost;p.x+=Math.sin(p.y/40+p.d)*.4*boost;if(p.y<-5){p.y=H+5;p.x=Math.random()*W}
+  x.beginPath();x.fillStyle='rgba(255,'+(110+p.r*30|0)+',20,'+(.25+.15*boost/3)+')';x.shadowColor='#ff6a00';x.shadowBlur=8;x.arc(p.x,p.y,p.r*(boost>1?1.6:1),0,7);x.fill()}
+  boost+=(1-boost)*.03;requestAnimationFrame(f)})()})();
+let S={mode:'bal',auto:false,mon:true,not:false,wl:false,games:[],prof:{}};
+try{Object.assign(S,JSON.parse(localStorage.getItem('gbp')||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem('gbp',JSON.stringify(S))}catch(e){}};
+let fps=0,hz=0,hist=[],bat=null,wake=null,lat=null;
+function tab(n){document.querySelectorAll('section').forEach((s,i)=>s.classList.toggle('on',i==n));document.querySelectorAll('#nv button').forEach((b,i)=>b.classList.toggle('on',i==n));scrollTo(0,0);if(n==3&&window.GBP&&!loaded)loadApps()}
+// FPS e taxa de atualização reais
+let fr=0,t0=performance.now(),last=t0,dts=[];
+function loop(t){fr++;dts.push(t-last);last=t;if(dts.length>120)dts.shift();
+ if(t-t0>=1000){fps=Math.round(fr*1000/(t-t0));fr=0;t0=t;const md=[...dts].sort((a,b)=>a-b)[Math.floor(dts.length/2)];hz=Math.round(1000/md/10)*10;hist.push(fps);if(hist.length>60)hist.shift();if(S.mon)draw()}
+ requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+function draw(){
+ $('fps').textContent=fps;$('hz').textContent=hz?hz+' Hz':'–';$('hz2').textContent=hz?hz+' Hz':'–';
+ const pm=performance.memory;$('heap').textContent=pm?Math.round(pm.usedJSHeapSize/1048576)+' MB':'n/d';
+ $('ram').textContent=navigator.deviceMemory?'≈ '+navigator.deviceMemory+' GB':'n/d';
+ $('cpu').textContent=navigator.hardwareConcurrency||'n/d';
+ const c=navigator.connection;$('net').textContent=c?(c.effectiveType||'').toUpperCase()+(c.rtt!=null?' · '+c.rtt+'ms':''):'n/d';
+ $('bat').textContent=bat?Math.round(bat.level*100)+'%'+(bat.charging?' ⚡':''):'n/d';
+ const cv=$('cv'),x=cv.getContext('2d');x.clearRect(0,0,520,90);x.strokeStyle='#ff8a1f';x.lineWidth=2;x.shadowColor='#ff8a1f';x.shadowBlur=8;x.beginPath();
+ const mx=Math.max(60,hz||60);hist.forEach((v,i)=>{const px=i*520/59,py=88-Math.min(v/mx,1)*84;i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke()}
+if(navigator.getBattery)navigator.getBattery().then(b=>{bat=b}).catch(()=>{});
+// diagnóstico
+function analyze(){
+ const r=[];let sc=100;const pm=performance.memory,mem=navigator.deviceMemory,c=navigator.connection;
+ if(mem&&mem<=2){sc-=30;r.push(['w','Aparelho com pouca RAM (≈'+mem+' GB): use gráficos baixos e feche apps abertos manualmente.'])}
+ else if(mem&&mem<=4){sc-=12;r.push(['w','RAM moderada: prefira gráficos médios nos jogos pesados.'])}
+ if(pm&&pm.usedJSHeapSize/pm.jsHeapSizeLimit>.7){sc-=10;r.push(['w','Esta página está usando muita memória; recarregue-a.'])}
+ if(fps&&hz&&fps<hz*.8){sc-=15;r.push(['w','FPS abaixo da taxa da tela agora: o aparelho está sobrecarregado.'])}
+ if(bat&&bat.level<.2&&!bat.charging){sc-=10;r.push(['e','Bateria abaixo de 20%: o sistema pode reduzir o desempenho. Carregue antes de jogar.'])}
+ if(c&&(c.effectiveType==='2g'||c.effectiveType==='3g'||c.rtt>150)){sc-=15;r.push(['w','Conexão fraca ou instável. Prefira Wi-Fi 5 GHz ou chegue perto do roteador.'])}
+ if(c&&c.saveData){r.push(['w','Economia de dados ativa no navegador.'])}
+ if(!r.length)r.push(['o','Nenhum problema detectado agora. Ative “Não incomodar” e feche apps em segundo plano nas Configurações do Android.']);
+ r.push(['','Para liberar RAM com segurança: abra a tela de apps recentes do Android e feche os que você não usa. Apps web não podem encerrar outros apps.']);
+ sc=Math.max(5,sc);$('sc').textContent=sc+'/100';$('sl').textContent=sc>=80?'Ótimo':sc>=55?'Regular':'Fraco';$('scb').style.width=sc+'%';
+ $('rec').innerHTML=r.map(a=>'<div class="tip '+a[0]+'">• '+a[1]+'</div>').join('');
+ graphics(mem)}
+function graphics(mem){
+ const w=screen.width*devicePixelRatio,h=screen.height*devicePixelRatio;
+ $('res').textContent=w+'×'+h;$('dpr').textContent=devicePixelRatio.toFixed(1)+'x';
+ try{const g=document.createElement('canvas').getContext('webgl');const e=g.getExtension('WEBGL_debug_renderer_info');$('gpu').textContent=e?g.getParameter(e.UNMASKED_RENDERER_WEBGL):'n/d'}catch(e){$('gpu').textContent='n/d'}
+ const lo=mem&&mem<=3,hi=(mem||4)>=6&&(navigator.hardwareConcurrency||4)>=8;
+ const q=lo?'Baixa / Fluida':hi?'Alta / Ultra':'Média / Equilibrada';
+ const t=['• Qualidade recomendada: <b>'+q+'</b>.','• Modo HD: escolha “HD” só se o FPS ficar estável.','• Alta qualidade: '+(hi?'o aparelho deve aguentar na maioria dos jogos.':'pode causar quedas de FPS e esquentar o aparelho.'),
+ '• Taxa de atualização: '+(hz>=90?'tela de '+hz+' Hz detectada; use 60 FPS em Eco e '+Math.min(hz,120)+' FPS em Ultra, se o jogo permitir.':'tela de ~'+(hz||60)+' Hz; 60 FPS é o ideal.'),'• Reduza sombras e antisserrilhamento antes de baixar a resolução.'];
+ $('gr').innerHTML=t.map(a=>'<div class="tip">'+a+'</div>').join('')}
+async function optimize(){
+ const b=$('go');if(b.classList.contains('run'))return;b.classList.add('run');
+ const steps=['Medindo FPS e taxa de tela…','Verificando memória…','Verificando bateria…','Testando rede…','Gerando recomendações…'];
+ for(let i=0;i<steps.length;i++){$('st').textContent=steps[i];$('pg').style.width=(i+1)*20+'%';boost=5;if(i==3)await lagTest(true);await new Promise(r=>setTimeout(r,700))}
+ analyze();b.classList.remove('run');$('st').textContent='Diagnóstico concluído. Veja as recomendações abaixo.';
+ notify('Game Booster Pro','Diagnóstico concluído.')}
+// ping real até o servidor da página
+async function lagTest(q){
+ let v=[];if(window.GBP){try{v=(await nat('ping')).v}catch(e){}}else{for(let i=0;i<6;i++){const t=performance.now();try{await fetch(location.href.split('#')[0]+'?p='+Math.random(),{cache:'no-store',method:'HEAD'});v.push(performance.now()-t)}catch(e){}}}
+ const c=navigator.connection;if(c){$('ety').textContent=(c.effectiveType||'n/d').toUpperCase();$('dl').textContent=c.downlink!=null?c.downlink+' Mbps':'n/d'}else{$('ety').textContent='n/d';$('dl').textContent='n/d'}
+ if(!v.length){$('ping').textContent='falhou';$('jit').textContent='–';$('lagrep').innerHTML='<div class="tip e">Não foi possível medir a latência agora.</div>';return}
+ const avg=v.reduce((a,b)=>a+b)/v.length,j=Math.max(...v)-Math.min(...v);lat={avg,j};
+ $('ping').textContent=Math.round(avg)+' ms';$('jit').textContent=Math.round(j)+' ms';
+ const t=[];if(avg>150)t.push(['e','Latência alta: troque de rede ou aproxime-se do roteador.']);else if(avg>80)t.push(['w','Latência razoável; pode haver lag em jogos competitivos.']);else t.push(['o','Latência boa.']);
+ if(j>80)t.push(['w','Conexão instável (oscilação alta). Evite downloads em paralelo e use Wi-Fi 5 GHz.']);
+ t.push(['','Feche streaming e downloads em outros aparelhos da rede enquanto joga.']);
+ $('lagrep').innerHTML=t.map(a=>'<div class="tip '+a[0]+'">• '+a[1]+'</div>').join('')}
+// biblioteca: apps instalados via ponte nativa Android (window.GBP)
+const cbs={};let cid=0;
+window.__cb=(id,j)=>{const f=cbs[id];delete cbs[id];f&&f(JSON.parse(j))};
+function nat(m,a){return new Promise((res,rej)=>{if(!window.GBP)return rej(new Error('nobridge'));const id=++cid;cbs[id]=res;GBP.call(id,m,a||'')})}
+let APPS=[],flt='all',asc=true,cur=null,loaded=false;
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function setF(f){flt=f;document.querySelectorAll('#flt button').forEach(b=>b.classList.toggle('on',b.dataset.f==f));renderLib()}
+function toggleSort(){asc=!asc;$('srt').textContent=asc?'A→Z':'Z→A';renderLib()}
+async function loadApps(){
+ if(!window.GBP){$('lbc').style.display='none';$('nb').style.display='block';$('al').innerHTML='';return}
+ $('cnt').textContent='Carregando…';
+ try{const r=await nat('apps');APPS=r.apps||[];loaded=true;renderLib()}catch(e){$('cnt').textContent='Erro ao ler os apps'}}
+function renderLib(){if(!window.GBP)return;
+ const q=$('q').value.trim().toLowerCase();
+ const l=APPS.filter(a=>(flt=='all'||(flt=='game')==a.g)&&(!q||a.n.toLowerCase().includes(q)||a.p.toLowerCase().includes(q)));
+ l.sort((a,b)=>a.n.localeCompare(b.n,'pt-BR')*(asc?1:-1));
+ $('cnt').textContent=l.length+' de '+APPS.length;
+ $('al').innerHTML=l.map(a=>'<div class="ac" onclick="openDet(\''+a.p+'\')">'+(a.g?'<span class="gt">JOGO</span>':'')+'<img loading="lazy" src="https://gbp.local/icon/'+a.p+'.png" alt=""><b>'+esc(a.n)+'</b></div>').join('')}
+const PDESC={eco:'Não encerra nenhum app em segundo plano. Só verifica memória e temperatura.',bal:'Pede ao Android para encerrar apps comuns em segundo plano e verifica memória e temperatura.',ult:'Igual ao Equilibrado, com alerta se o aparelho estiver quente demais para alto desempenho.'};
+const PN={eco:'Economia',bal:'Equilibrado',ult:'Alto Desempenho'};
+async function openDet(p){cur=APPS.find(a=>a.p==p);if(!cur)return;
+ $('lib').style.display='none';$('det').style.display='block';scrollTo(0,0);
+ $('d_ic').src='https://gbp.local/icon/'+p+'.png';$('d_n').textContent=cur.n;$('d_p').textContent=p;$('d_i').innerHTML='';
+ $('d_b').style.display='';$('d_run').style.display='none';$('d_res').style.display='none';$('d_pg').style.width='0';
+ $('d_go').textContent=cur.g?'INICIAR JOGO':'INICIAR APLICATIVO';setPf(S.prof[p]||'bal');
+ try{const r=await nat('info',p);const d=t=>t?new Date(t).toLocaleDateString('pt-BR'):'–';
+  $('d_i').innerHTML=[['Tipo',cur.g?'Jogo':'Aplicativo'],['Versão',r.version||'–'],['Tamanho do APK',r.sizeMb+' MB'],['Instalado em',d(r.installed)],['Atualizado em',d(r.updated)],['API alvo',r.target]].map(x=>'<div class="m"><small>'+x[0]+'</small><b style="font-size:14px">'+esc(x[1])+'</b></div>').join('')}catch(e){}}
+function closeDet(){$('det').style.display='none';$('lib').style.display='block';cur=null}
+function setPf(m){if(!cur)return;S.prof[cur.p]=m;save();document.querySelectorAll('#d_pf button').forEach(b=>b.classList.toggle('on',b.dataset.m==m));$('d_pt').textContent=PDESC[m]}
+async function runBoost(){const a=cur,m=S.prof[a.p]||'bal';
+ $('d_b').style.display='none';$('d_res').style.display='none';$('d_run').style.display='block';
+ const P=nat('boost',JSON.stringify({p:a.p,mode:m}));
+ const st=['Analisando o dispositivo…','Verificando recursos disponíveis…','Preparando perfil de desempenho…','Aplicando otimizações permitidas…','Otimização concluída.'];
+ for(let i=0;i<5;i++){$('d_st').textContent=st[i];$('d_pg').style.width=(i+1)*20+'%';boost=6;await new Promise(r=>setTimeout(r,i==3?900:650))}
+ let r;try{r=await P}catch(e){r={error:'falha na ponte nativa'}}
+ const L=[];
+ if(r.error)L.push(['e','Não foi possível concluir: '+esc(r.error)]);else{
+  L.push(['o','Memória livre: '+r.before+' MB → '+r.after+' MB (de '+r.total+' MB)']);
+  L.push(m=='eco'?['','Perfil Economia: nenhum app foi encerrado.']:['o','Pedido de encerramento enviado a '+r.stopped+' apps comuns em segundo plano. O sistema e '+esc(a.n)+' foram preservados; o Android decide o que encerrar.']);
+  L.push(['','Estado térmico: '+r.thermal+(r.temp?' · bateria '+r.temp+' °C':'')]);
+  if(m=='ult'&&r.hot)L.push(['w','Aparelho quente: o Android pode reduzir o desempenho. Considere o perfil Equilibrado.']);
+  L.push(['','Perfil '+PN[m]+' salvo para este app.'])}
+ $('d_rl').innerHTML=L.map(x=>'<div class="tip '+x[0]+'">• '+x[1]+'</div>').join('');$('d_res').style.display='block'}
+function launchApp(){nat('launch',cur.p).then(r=>{if(r.error)alert('Não foi possível abrir o app.')})}
+function gbBack(){if($('det').style.display=='block'){closeDet();return true}if(document.querySelector('section.on').id!='s0'){tab(0);return true}return false}
+function initLib(){S.prof=S.prof||{};loadApps()}
+// modos
+const MT={eco:'Economia de bateria: gráficos baixos, 30–60 FPS, brilho reduzido, sem apps em segundo plano.',bal:'Equilíbrio: gráficos médios, 60 FPS, brilho automático.',ult:'Desempenho máximo: gráficos altos e maior taxa de FPS que o jogo permitir. Fique de olho no calor: se o aparelho esquentar, volte ao Balanced. A tela fica ligada enquanto este app estiver aberto (se ativado).'}
+async function setMode(m){S.mode=m;save();document.querySelectorAll('[data-m]').forEach(b=>b.classList.toggle('on',b.dataset.m==m));$('mt').textContent=MT[m];
+ if(wake){try{await wake.release()}catch(e){}wake=null}
+ if(m==='ult'&&S.wl&&navigator.wakeLock){try{wake=await navigator.wakeLock.request('screen')}catch(e){}}}
+async function cfg(){S.auto=$('c_auto').checked;S.mon=$('c_mon').checked;S.wl=$('c_wl').checked;
+ if($('c_not').checked&&'Notification' in window){const p=await Notification.requestPermission();S.not=p==='granted';$('c_not').checked=S.not}else S.not=false;save();setMode(S.mode)}
+function notify(t,b){if(S.not&&'Notification' in window&&Notification.permission==='granted'){try{new Notification(t,{body:b})}catch(e){}}}
+function resetAll(){if(confirm('Restaurar configurações padrão? Seus jogos serão mantidos.')){const g=S.games;S={mode:'bal',auto:false,mon:true,not:false,wl:false,games:g};save();init()}}
+function init(){$('c_auto').checked=S.auto;$('c_mon').checked=S.mon;$('c_not').checked=S.not;$('c_wl').checked=S.wl;setMode(S.mode);initLib();draw();analyze()}
+init();if(S.auto)setTimeout(optimize,1500);
+</script></body></html>
